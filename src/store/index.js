@@ -2,9 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { authApi } from "../services/auth/auth";
 import { rtkQueryErrorLogger } from "./error-middleware/error-middleware";
+import userReducer from "../features/user/user.js";
 
 export const store = configureStore({
   reducer: {
+    user: userReducer,
     [authApi.reducerPath]: authApi.reducer,
   },
 

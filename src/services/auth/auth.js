@@ -12,7 +12,11 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://dummyjson.com/auth",
     prepareHeaders: (headers, { getState }) => {
-      headers.set("Authorization", `Bearer ${getCookie("token")}`);
+      const token = getState().user.token;
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
     },
   }),
 

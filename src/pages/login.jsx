@@ -1,26 +1,34 @@
 import { useForm } from "react-hook-form";
 import { useGetUserQuery, useLoginMutation } from "../services/auth/auth";
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-}
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { updateIsLogined, updateToken } from "../features/user/user";
+import { useNavigate } from "react-router";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { data } = useGetUserQuery();
+
   const [login, { isLoading }] = useLoginMutation();
 
   const onSubmit = async (data) => {
     try {
       const user = await login({ ...data }).unwrap();
-      document.cookie = `token=${user.accessToken}JohnDoe; expires=${new Date(
-        Date.now() + 58 * 60 * 1000
-      )} path=/`;
+
+      dispatch(updateIsLogined(true));
+      dispatch(updateToken(user.accessToken));
+      const now = new Date();
+      now.setMinutes(now.getMinutes() + 55); // Add 50 minutes
+      const expires = now.toUTCString();
+      document.cookie = `token=${user.accessToken}; expires=${expires}; path=/; Secure; SameSite=Strict`;
+
+      navigate("/");
     } catch (e) {
       console.log("error password");
     }
