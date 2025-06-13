@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getCookie } from "../../utils/cookies/getTokenFromCookies";
 
-const tokenFormCookies = getCookie("token") || "";
+const tokenFromCookies = getCookie("token") || "";
 const initialState = {
-  isLogined: Boolean(tokenFormCookies),
-  token: tokenFormCookies,
+  isLogined: Boolean(tokenFromCookies),
+  token: tokenFromCookies,
 };
 
 export const userSlice = createSlice({

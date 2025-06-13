@@ -1,37 +1,38 @@
 import { useForm } from "react-hook-form";
-import { useGetUserQuery, useLoginMutation } from "../services/auth/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useLoginMutation } from "../services/auth/auth";
+import { useDispatch } from "react-redux";
 import { updateIsLogined, updateToken } from "../features/user/user";
 import { useNavigate } from "react-router";
+import { setExpToken } from "../utils/cookies/getTokenFromCookies";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading, error, reset: resetLoginMutation }] =
+    useLoginMutation();
 
   const onSubmit = async (data) => {
     try {
-      const user = await login({ ...data }).unwrap();
-
+      const user = await login(data).unwrap();
       dispatch(updateIsLogined(true));
       dispatch(updateToken(user.accessToken));
-      const now = new Date();
-      now.setMinutes(now.getMinutes() + 55); // Add 50 minutes
-      const expires = now.toUTCString();
-      document.cookie = `token=${user.accessToken}; expires=${expires}; path=/; Secure; SameSite=Strict`;
-
+      setExpToken(user.accessToken);
       navigate("/");
     } catch (e) {
-      console.log("error password");
+      reset();
     }
+  };
+
+  const handleErrorReset = () => {
+    if (error) resetLoginMutation();
   };
 
   return (
@@ -39,15 +40,27 @@ const LoginPage = () => {
       <input
         type="text"
         placeholder="userName"
-        {...register("username", { required: true })}
+        {...register("username", {
+          required: { value: true, message: "Please fill the username" },
+          onChange: handleErrorReset,
+        })}
       />
+      {errors?.username && (
+        <p style={{ color: "red" }}>{errors?.username?.message}</p>
+      )}
       <input
         type="password"
         placeholder="password"
-        {...register("password", { required: true })}
+        {...register("password", {
+          required: { value: true, message: "Please fill the password" },
+          onChange: handleErrorReset,
+        })}
       />
-
-      <input type="submit" />
+      {errors?.password && (
+        <p style={{ color: "red" }}>{errors?.password?.message}</p>
+      )}
+      {error && <div style={{ color: "red" }}>invalid credential</div>}
+      <input type="submit" disabled={isLoading} />
     </form>
   );
 };
