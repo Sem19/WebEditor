@@ -1,0 +1,21 @@
+.column {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.column_empty {
+  flex: 1 1;
+  min-width: 100px;
+  outline: 2px solid #b5b5b5;
+}
+
+.selected {
+  outline: 2px solid #0d99ff;
+}
+
+.column > img {
+  display: block;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}

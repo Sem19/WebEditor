@@ -38,6 +38,8 @@ export default [
       "no-unreachable": "warn",
       "react/jsx-uses-react": "off",
       "react/react-in-jsx-scope": "off",
+      // Ignore missing prop-types validation
+      "react/prop-types": "off",
     },
   },
 ];
