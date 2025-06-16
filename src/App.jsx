@@ -3,6 +3,7 @@ import LoginPage from "./pages/login.jsx";
 import HomePage from "./pages/home.jsx";
 import PrivateRoute from "./components/private-route/private-route.jsx";
 import { ToastContainer } from "react-toastify";
+import "./reset.css";
 
 const App = () => {
   return (

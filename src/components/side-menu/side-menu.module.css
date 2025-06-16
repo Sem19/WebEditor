@@ -1,0 +1,41 @@
+.side_menu {
+  box-sizing: border-box;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 18px;
+  border-left: 1px solid #e6e6e6;
+}
+
+.box {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid gray;
+  margin-bottom: 16px;
+}
+
+.button {
+  background: none;
+  border: none;
+  color: dodgerblue;
+  text-align: left;
+}
+.title {
+  padding: 0 6px;
+  color: black;
+}
+.wrapper {
+  display: flex;
+}
+.wrapper_item {
+  border: 1px solid black;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.selected {
+  background: #6b676745;
+}

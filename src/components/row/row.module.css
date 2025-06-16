@@ -7,9 +7,10 @@
   padding: 20px;
   gap: 40px;
 }
-.row:hover {
-  outline: 1px solid #0d99ff66;
-}
+
 .selected {
   outline: 2px solid #0d99ff;
+}
+.row:not(.selected):hover {
+  outline: 1px solid #0d99ff66;
 }
