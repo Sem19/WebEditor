@@ -2,8 +2,14 @@ import Column from "../components/column/column.jsx";
 import Row from "../components/row/row.jsx";
 import animalIcon from "../assets/img/animal1.jpg";
 import SideMenu from "../components/side-menu/side-menu.jsx";
+import { useState } from "react";
 
 const HomePage = () => {
+  const [editorValue, setEditorValue] = useState({ content: "img" });
+  const [rows, setRows] = useState([
+    { id: 1, colums: [{ id: 1, imgUrl: "", text: "" }] },
+  ]);
+
   return (
     <div
       style={{
@@ -32,7 +38,7 @@ const HomePage = () => {
           <Column></Column>
         </Row>
       </div>
-      <SideMenu />
+      <SideMenu editorValue={editorValue} setEditorValue={setEditorValue} />
     </div>
   );
 };

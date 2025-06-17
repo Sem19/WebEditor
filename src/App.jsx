@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LoginPage from "./pages/login.jsx";
+import LoginPage from "./pages/login/login.jsx";
 import HomePage from "./pages/home.jsx";
 import PrivateRoute from "./components/private-route/private-route.jsx";
 import { ToastContainer } from "react-toastify";

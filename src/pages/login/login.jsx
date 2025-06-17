@@ -1,9 +1,10 @@
+import styles from "./login.module.css";
 import { useForm } from "react-hook-form";
-import { useLoginMutation } from "../services/auth/auth";
+import { useLoginMutation } from "../../services/auth/auth";
 import { useDispatch } from "react-redux";
-import { updateIsLogined, updateToken } from "../features/user/user";
+import { updateIsLogined, updateToken } from "../../features/user/user";
 import { useNavigate } from "react-router";
-import { setExpToken } from "../utils/cookies/getTokenFromCookies";
+import { setExpToken } from "../../utils/cookies/getTokenFromCookies";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,9 @@ const LoginPage = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <div className={styles.container}>
+      <div className={styles.login}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.my_form}>
       <input
         type="text"
         placeholder="userName"
@@ -60,8 +63,10 @@ const LoginPage = () => {
         <p style={{ color: "red" }}>{errors?.password?.message}</p>
       )}
       {error && <div style={{ color: "red" }}>invalid credential</div>}
-      <input type="submit" disabled={isLoading} />
-    </form>
+          <button type="submit" disabled={isLoading} className={styles.button}>Login</button>
+        </form>
+      </div>
+    </div>
   );
 };
 export default LoginPage;
