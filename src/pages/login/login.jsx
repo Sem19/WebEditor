@@ -39,31 +39,33 @@ const LoginPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.login}>
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.my_form}>
-      <input
-        type="text"
-        placeholder="userName"
-        {...register("username", {
-          required: { value: true, message: "Please fill the username" },
-          onChange: handleErrorReset,
-        })}
-      />
-      {errors?.username && (
-        <p style={{ color: "red" }}>{errors?.username?.message}</p>
-      )}
-      <input
-        type="password"
-        placeholder="password"
-        {...register("password", {
-          required: { value: true, message: "Please fill the password" },
-          onChange: handleErrorReset,
-        })}
-      />
-      {errors?.password && (
-        <p style={{ color: "red" }}>{errors?.password?.message}</p>
-      )}
-      {error && <div style={{ color: "red" }}>invalid credential</div>}
-          <button type="submit" disabled={isLoading} className={styles.button}>Login</button>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.my_form}>
+          <input
+            type="text"
+            placeholder="userName"
+            {...register("username", {
+              required: { value: true, message: "Please fill the username" },
+              onChange: handleErrorReset,
+            })}
+          />
+          {errors?.username && (
+            <p style={{ color: "red" }}>{errors?.username?.message}</p>
+          )}
+          <input
+            type="password"
+            placeholder="password"
+            {...register("password", {
+              required: { value: true, message: "Please fill the password" },
+              onChange: handleErrorReset,
+            })}
+          />
+          {errors?.password && (
+            <p style={{ color: "red" }}>{errors?.password?.message}</p>
+          )}
+          {error && <div style={{ color: "red" }}>invalid credential</div>}
+          <button type="submit" disabled={isLoading} className={styles.button}>
+            Login
+          </button>
         </form>
       </div>
     </div>
