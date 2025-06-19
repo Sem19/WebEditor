@@ -20,9 +20,29 @@ const HomePage = () => {
     setRows([...rows, newRow]);
   };
 
-  const handleAddColumn = () => {};
+  const handleAddColumn = () => {
+    const newColumn = {
+      id: Date.now(),
+      imgUrl: "",
+      text: "Untilted",
+    };
+
+    setRows(
+      rows.map((row) =>
+        row.id === selected.selectedRow
+          ? { id: row.id, columns: [...row.columns, newColumn] }
+          : row
+      )
+    );
+    setSelected({
+      ...selected,
+      selectedColumn: newColumn.id,
+    });
+  };
 
   const handleSelect = (rowId, columnId) => {
+    const isSameRow = rowId === selected.selectedRow;
+    if (isSameRow) return;
     setSelected({
       selectedRow: rowId,
       selectedColumn: columnId,
@@ -59,6 +79,7 @@ const HomePage = () => {
       <SideMenu
         editorValue={editorValue}
         handleAddRow={handleAddRow}
+        handleAddColumn={handleAddColumn}
         setEditorValue={setEditorValue}
       />
     </div>

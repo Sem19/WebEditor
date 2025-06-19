@@ -6,7 +6,12 @@ import { ReactComponent as ImgIcon } from "../../assets/img/img-icon.svg";
 import { ReactComponent as TextIcon } from "../../assets/img/text-icon.svg";
 import ImgSection from "../img-section/img-section.jsx";
 
-const SideMenu = ({ handleAddRow, editorValue, setEditorValue }) => {
+const SideMenu = ({
+  handleAddRow,
+  handleAddColumn,
+  editorValue,
+  setEditorValue,
+}) => {
   const { content } = editorValue;
 
   const handleTogleSection = (action) => {
@@ -24,7 +29,9 @@ const SideMenu = ({ handleAddRow, editorValue, setEditorValue }) => {
 
       <div className={styles.box}>
         <h2 className={styles.title}>Row</h2>
-        <button className={styles.button}>Add column</button>
+        <button className={styles.button} onClick={handleAddColumn}>
+          Add column
+        </button>
       </div>
       <div className={styles.box}>
         <h2 className={styles.title}>Column</h2>
