@@ -6,6 +6,10 @@ import { useState } from "react";
 const HomePage = () => {
   const [editorValue, setEditorValue] = useState({ content: "img" });
   const [rows, setRows] = useState([]);
+  const [selected, setSelected] = useState({
+    selectedRow: null,
+    selectedColumn: null,
+  });
 
   const handleAddRow = () => {
     const newRow = {
@@ -14,6 +18,15 @@ const HomePage = () => {
     };
 
     setRows([...rows, newRow]);
+  };
+
+  const handleAddColumn = () => {};
+
+  const handleSelect = (rowId, columnId) => {
+    setSelected({
+      selectedRow: rowId,
+      selectedColumn: columnId,
+    });
   };
 
   return (
@@ -26,10 +39,17 @@ const HomePage = () => {
       }}
     >
       <div className="stage" style={{ paddingTop: "20px" }}>
-        {rows.map((raw) => (
-          <Row key={raw.id}>
-            {raw.columns.map((column) => (
-              <Column key={column.id}>
+        {rows.map((row) => (
+          <Row
+            key={row.id}
+            onClick={() => handleSelect(row.id, row.columns[0].id)}
+            selected={row.id === selected.selectedRow}
+          >
+            {row.columns.map((column) => (
+              <Column
+                key={column.id}
+                selected={column.id === selected.selectedColumn}
+              >
                 <p>{column.text}</p>
               </Column>
             ))}
