@@ -1,19 +1,20 @@
 import Column from "../../components/column/column.jsx";
 import Row from "../../components/row/row.jsx";
-import animalIcon from "../../assets/img/download.jpg";
 import SideMenu from "../../components/side-menu/side-menu.jsx";
 import { useState } from "react";
-import styles from "./home.module.css";
 
 const HomePage = () => {
   const [editorValue, setEditorValue] = useState({ content: "img" });
-  const [rows, setRows] = useState([
-    // {
-    //   id: 1,
-    //   bordName: "Untitled",
-    //   colums: [{ id: 1, imgUrl: "", text: "ColumnText" }],
-    // },
-  ]);
+  const [rows, setRows] = useState([]);
+
+  const handleAddRow = () => {
+    const newRow = {
+      id: Date.now(),
+      columns: [{ id: Date.now(), imgUrl: "", text: "Untilted" }],
+    };
+
+    setRows([...rows, newRow]);
+  };
 
   return (
     <div
@@ -26,9 +27,9 @@ const HomePage = () => {
     >
       <div className="stage" style={{ paddingTop: "20px" }}>
         {rows.map((raw) => (
-          <Row key={raw.id} selected>
-            {raw.colums.map((column) => (
-              <Column key={column.id} selected>
+          <Row key={raw.id}>
+            {raw.columns.map((column) => (
+              <Column key={column.id}>
                 <p>{column.text}</p>
               </Column>
             ))}
@@ -37,8 +38,8 @@ const HomePage = () => {
       </div>
       <SideMenu
         editorValue={editorValue}
+        handleAddRow={handleAddRow}
         setEditorValue={setEditorValue}
-        setRows={setRows}
       />
     </div>
   );
