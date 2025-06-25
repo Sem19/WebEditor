@@ -40,9 +40,17 @@ const HomePage = () => {
     });
   };
 
-  const handleSelect = (rowId, columnId) => {
+  const handleRowSelect = (rowId, columnId) => {
     const isSameRow = rowId === selected.selectedRow;
     if (isSameRow) return;
+    setSelected({
+      selectedRow: rowId,
+      selectedColumn: columnId,
+    });
+  };
+
+  const handleColumnSelect = (e, rowId, columnId) => {
+    e.stopPropagation();
     setSelected({
       selectedRow: rowId,
       selectedColumn: columnId,
@@ -62,13 +70,14 @@ const HomePage = () => {
         {rows.map((row) => (
           <Row
             key={row.id}
-            onClick={() => handleSelect(row.id, row.columns[0].id)}
+            onClick={() => handleRowSelect(row.id, row.columns[0].id)}
             selected={row.id === selected.selectedRow}
           >
             {row.columns.map((column) => (
               <Column
                 key={column.id}
                 selected={column.id === selected.selectedColumn}
+                onClick={(e) => handleColumnSelect(e, row.id, column.id)}
               >
                 <p>{column.text}</p>
               </Column>
