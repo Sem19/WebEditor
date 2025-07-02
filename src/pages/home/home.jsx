@@ -4,7 +4,12 @@ import SideMenu from "../../components/side-menu/side-menu.jsx";
 import { useState } from "react";
 
 const HomePage = () => {
-  const [editorValue, setEditorValue] = useState({ content: "img" });
+  const [editorValue, setEditorValue] = useState({
+    content: "text",
+    text: "",
+    align: "",
+    imgURL: "",
+  });
   const [rows, setRows] = useState([]);
   const [selected, setSelected] = useState({
     selectedRow: null,
@@ -14,7 +19,9 @@ const HomePage = () => {
   const handleAddRow = () => {
     const newRow = {
       id: Date.now(),
-      columns: [{ id: Date.now(), imgUrl: "", text: "Untilted" }],
+      columns: [
+        { id: Date.now(), imgUrl: "", text: "Untilted", align: "left" },
+      ],
     };
 
     setRows([...rows, newRow]);
@@ -25,6 +32,7 @@ const HomePage = () => {
       id: Date.now(),
       imgUrl: "",
       text: "Untilted",
+      align: "left",
     };
 
     setRows(
@@ -49,12 +57,37 @@ const HomePage = () => {
     });
   };
 
-  const handleColumnSelect = (e, rowId, columnId) => {
+  const handleColumnSelect = (e, rowId, columnId, column) => {
     e.stopPropagation();
     setSelected({
       selectedRow: rowId,
       selectedColumn: columnId,
     });
+    setEditorValue({
+      content: column.text ? "text" : "img",
+      text: column.text,
+      align: column.align,
+      imgURL: column.imgURL,
+    });
+  };
+
+  const onChangeData = (type, value) => {
+    setEditorValue({ ...editorValue, [type]: value });
+    if (type === "content") return;
+    setRows(
+      rows.map((row) =>
+        row.id === selected.selectedRow
+          ? {
+              id: row.id,
+              columns: row.columns.map((column) =>
+                column.id === selected.selectedColumn
+                  ? { ...column, [type]: value }
+                  : column
+              ),
+            }
+          : row
+      )
+    );
   };
 
   return (
@@ -77,9 +110,11 @@ const HomePage = () => {
               <Column
                 key={column.id}
                 selected={column.id === selected.selectedColumn}
-                onClick={(e) => handleColumnSelect(e, row.id, column.id)}
+                onClick={(e) =>
+                  handleColumnSelect(e, row.id, column.id, column)
+                }
               >
-                <p>{column.text}</p>
+                <p style={{ textAlign: column.align }}>{column.text}</p>
               </Column>
             ))}
           </Row>
@@ -89,7 +124,7 @@ const HomePage = () => {
         editorValue={editorValue}
         handleAddRow={handleAddRow}
         handleAddColumn={handleAddColumn}
-        setEditorValue={setEditorValue}
+        onChangeData={onChangeData}
       />
     </div>
   );

@@ -10,13 +10,11 @@ const SideMenu = ({
   handleAddRow,
   handleAddColumn,
   editorValue,
-  setEditorValue,
+  onChangeData,
 }) => {
-  const { content } = editorValue;
+  const { content, text, align } = editorValue;
 
-  const handleTogleSection = (action) => {
-    setEditorValue({ ...editorValue, content: action });
-  };
+  const handleTogleSection = (content) => onChangeData("content", content);
 
   return (
     <div className={classNames(styles.side_menu, "properties")}>
@@ -61,7 +59,11 @@ const SideMenu = ({
           </div>
         </div>
       </div>
-      {content == "text" ? <TextSection /> : <ImgSection />}
+      {content == "text" ? (
+        <TextSection text={text} align={align} onChangeData={onChangeData} />
+      ) : (
+        <ImgSection onChangeData={onChangeData} />
+      )}
     </div>
   );
 };

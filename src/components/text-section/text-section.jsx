@@ -4,12 +4,15 @@ import styles from "../side-menu/side-menu.module.css";
 import { ReactComponent as LeftIcon } from "../../assets/img/text-align-left.svg";
 import { ReactComponent as RightIcon } from "../../assets/img/text-align-right.svg";
 import { ReactComponent as CenterIcon } from "../../assets/img/text-align-center.svg";
-import { useState } from "react";
 
-const TextSection = () => {
-  const [alignment, setAlignment] = useState("center");
+const TextSection = ({ text, align, onChangeData }) => {
+  // const handleEditText = (value) => {
+  //   setEditorValue((prev) => ({ ...prev, text: value }));
+  // };
+  // const handleAlign = (value) => {
+  //   setEditorValue((prev) => ({ ...prev, align: value }));
+  // };
 
-  const HandleAligment = (align) => {};
   return (
     <>
       <div className={styles.box}>
@@ -22,33 +25,38 @@ const TextSection = () => {
             <div
               className={classNames(
                 styles.wrapper_item,
-                alignment == "left" ? styles.selected : null
+                align == "left" ? styles.selected : null
               )}
-              onClick={() => setAlignment("left")}
+              onClick={() => onChangeData("align", "left")}
             >
               <LeftIcon />
             </div>
             <div
               className={classNames(
                 styles.wrapper_item,
-                alignment == "center" ? styles.selected : null
+                align == "center" ? styles.selected : null
               )}
-              onClick={() => setAlignment("center")}
+              onClick={() => onChangeData("align", "center")}
             >
               <CenterIcon />
             </div>
             <div
               className={classNames(
                 styles.wrapper_item,
-                alignment == "right" ? styles.selected : null
+                align == "right" ? styles.selected : null
               )}
-              onClick={() => setAlignment("right")}
+              onClick={() => onChangeData("align", "right")}
             >
               <RightIcon />
             </div>
           </div>
         </div>
-        <textarea placeholder="Enter text" rows={7}></textarea>
+        <textarea
+          value={text}
+          onChange={(e) => onChangeData("text", e.target.value)}
+          placeholder="Enter text"
+          rows={7}
+        ></textarea>
       </div>
     </>
   );

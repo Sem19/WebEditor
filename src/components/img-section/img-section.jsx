@@ -1,6 +1,6 @@
 import styles from "../side-menu/side-menu.module.css";
 
-const ImgSection = () => {
+const ImgSection = ({ onChangeData }) => {
   return (
     <>
       <div className={styles.box}>
