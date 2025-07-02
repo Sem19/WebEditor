@@ -7,7 +7,11 @@ const ImgSection = ({ onChangeData }) => {
         <h2 className={styles.title}>Image</h2>
         <div style={{ display: "flex" }}>
           <h2 className={styles.title}>URL</h2>
-          <input type="text" style={{ width: "100%" }}></input>
+          <input
+            type="text"
+            onChange={(e) => onChangeData("imgURL", e.target.value)}
+            style={{ width: "100%" }}
+          ></input>
         </div>
       </div>
     </>

@@ -2,6 +2,7 @@ import Column from "../../components/column/column.jsx";
 import Row from "../../components/row/row.jsx";
 import SideMenu from "../../components/side-menu/side-menu.jsx";
 import { useState } from "react";
+import animal from "../../assets/img/animal1.jpg";
 
 const HomePage = () => {
   const [editorValue, setEditorValue] = useState({
@@ -26,6 +27,8 @@ const HomePage = () => {
 
     setRows([...rows, newRow]);
   };
+
+  console.log(animal);
 
   const handleAddColumn = () => {
     const newColumn = {
@@ -115,6 +118,7 @@ const HomePage = () => {
                 }
               >
                 <p style={{ textAlign: column.align }}>{column.text}</p>
+                {column.imgURL && <img alt="animal" src={column.imgURL}></img>}
               </Column>
             ))}
           </Row>
