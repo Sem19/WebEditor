@@ -2,54 +2,24 @@ import Column from "../../components/column/column.jsx";
 import Row from "../../components/row/row.jsx";
 import SideMenu from "../../components/side-menu/side-menu.jsx";
 import { useState } from "react";
-import animal from "../../assets/img/animal1.jpg";
+import { useEditor, useRows } from "./home-hooks.js";
 
 const HomePage = () => {
-  const [editorValue, setEditorValue] = useState({
-    content: "text",
-    text: "",
-    align: "",
-    imgURL: "",
-  });
-  const [rows, setRows] = useState([]);
   const [selected, setSelected] = useState({
     selectedRow: null,
     selectedColumn: null,
   });
 
-  const handleAddRow = () => {
-    const newRow = {
-      id: Date.now(),
-      columns: [
-        { id: Date.now(), imgUrl: "", text: "Untilted", align: "left" },
-      ],
-    };
+  const { rows, setRows, handleAddRow, handleAddColumn } = useRows(
+    selected,
+    setSelected
+  );
 
-    setRows([...rows, newRow]);
-  };
-
-  console.log(animal);
-
-  const handleAddColumn = () => {
-    const newColumn = {
-      id: Date.now(),
-      imgUrl: "",
-      text: "Untilted",
-      align: "left",
-    };
-
-    setRows(
-      rows.map((row) =>
-        row.id === selected.selectedRow
-          ? { id: row.id, columns: [...row.columns, newColumn] }
-          : row
-      )
-    );
-    setSelected({
-      ...selected,
-      selectedColumn: newColumn.id,
-    });
-  };
+  const { editorValue, setEditorValue, onChangeData } = useEditor(
+    rows,
+    setRows,
+    selected
+  );
 
   const handleRowSelect = (rowId, columnId) => {
     const isSameRow = rowId === selected.selectedRow;
@@ -72,25 +42,6 @@ const HomePage = () => {
       align: column.align,
       imgURL: column.imgURL,
     });
-  };
-
-  const onChangeData = (type, value) => {
-    setEditorValue({ ...editorValue, [type]: value });
-    if (type === "content") return;
-    setRows(
-      rows.map((row) =>
-        row.id === selected.selectedRow
-          ? {
-              id: row.id,
-              columns: row.columns.map((column) =>
-                column.id === selected.selectedColumn
-                  ? { ...column, [type]: value }
-                  : column
-              ),
-            }
-          : row
-      )
-    );
   };
 
   return (
