@@ -6,13 +6,6 @@ import { ReactComponent as RightIcon } from "../../assets/img/text-align-right.s
 import { ReactComponent as CenterIcon } from "../../assets/img/text-align-center.svg";
 
 const TextSection = ({ text, align, onChangeData }) => {
-  // const handleEditText = (value) => {
-  //   setEditorValue((prev) => ({ ...prev, text: value }));
-  // };
-  // const handleAlign = (value) => {
-  //   setEditorValue((prev) => ({ ...prev, align: value }));
-  // };
-
   return (
     <>
       <div className={styles.box}>
@@ -23,6 +16,7 @@ const TextSection = ({ text, align, onChangeData }) => {
 
           <div className={styles.wrapper}>
             <div
+              data
               className={classNames(
                 styles.wrapper_item,
                 align == "left" ? styles.selected : null

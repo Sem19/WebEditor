@@ -1,12 +1,14 @@
 import styles from "./header.module.css";
 
-const Header = () => {
+const Header = ({ user, logOut }) => {
   return (
     <div className={styles.header}>
       <div></div>
       <div className={styles.acount}>
-        <div>AcountName</div>
-        <button className={styles.button}>LogOut</button>
+        <h2>AcountName: {user?.name}</h2>
+        <button onClick={logOut} className={styles.button}>
+          LogOut
+        </button>
       </div>
     </div>
   );
